@@ -1,0 +1,39 @@
+.form-outline {
+    width: 50% !important;
+    margin: 0 auto !important;
+    text-align: center;
+  }
+h2 {
+  text-align: center;
+}  
+
+
+
+#Login{
+  align-items: center !important;
+  justify-content: center !important;
+  display: flex !important;
+}
+
+.form-check {
+  margin: 0 auto !important;
+  display: flex inline !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+ 
+}
+
+a{
+  text-align: center;
+  display: block;
+  margin: 0 auto !important;
+}
+
+#progressWrapper{
+  margin-top: 60px;
+  align-items: center;
+  width: 10% !important;
+  margin: 0 auto !important;
+  display: flex;
+}
