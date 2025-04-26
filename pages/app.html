@@ -1,38 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Calendar</title>
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet"/>
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
-  <style>
-    body {
-      background-color: #1e1e2f;
-      color: white;
-      font-family: sans-serif;
-      padding: 20px;
-    }
-    #calendar {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .btn {
-      background: #3b82f6;
-      color: white;
-      padding: 10px 15px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week plans</title>
+    <link rel="stylesheet" href="../styles/app.css">
 </head>
+
 <body>
-  <h2>Weekly Calendar</h2>
-  <button class="btn" onclick="addEvent()">Add Event</button>
-  <div id="calendar"></div>
+    <div class="container">
+        <dialog id="show">
+            
+        </dialog>
+        <div class="table-responsive">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr class="bg-light-gray">
+                        <th class="text-uppercase">Time
+                        </th>
+                        <th class="text-uppercase">Sunday</th>
+                        <th class="text-uppercase">Monday</th>
+                        <th class="text-uppercase">Tuesday</th>
+                        <th class="text-uppercase">Wednesday</th>
+                        <th class="text-uppercase">Thursday</th>
+                        <th class="text-uppercase">Friday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="align-middle">8:00-9:00</td>
+                        <td class="task-box">
 
-  <script src="app.js"></script>
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="align-middle">9:00-10:00</td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="align-middle">10:00-11:00</td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="align-middle">11:00-12:00</td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="align-middle">12:00-13:00</td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle">13:00-14:00</td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle">14:00-15:00</td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle">15:00-16:00</td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle">16:00-17:00</td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                        <td class="task-box">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle">17:00-18:00</td>
+                        <td class="task-box">
+                        
+                        </td>
+                        <td class="task-box">
+                        
+                        </td>
+                        <td class="task-box">
+                        
+                        </td>
+                        <td class="task-box">
+                        
+                        </td>
+                        <td class="task-box">
+                        
+                        </td>
+                        <td class="task-box">
+                        
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="../js/app.js" type="module"></script>
 </body>
-</html>
 
+</html>
