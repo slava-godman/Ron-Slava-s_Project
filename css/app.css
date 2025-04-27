@@ -134,9 +134,13 @@ table{margin-left:20%}
     margin-top: 10%;
     position: fixed;
 }
-#save{
+#save,#close{
     background-color: #9d60ff;
+    margin-top: 10px;
     width:30%
+}
+#save{
+    background-color: #d84213;
 }
 #chin{
     display:flex;

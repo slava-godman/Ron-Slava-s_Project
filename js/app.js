@@ -15,6 +15,26 @@ let yellow1 = "#f4dd44"
 let red1 = "#df3719"
 for (let x in tasks) {
     tasks[x].id = hc(x)[0] + '-' + hc(x)[1]
+    tasks[x].innerHTML = `<div class="badge badge-secondary" id="badge-${hc(x)[0]}-${hc(x)[1]}"></div>`
+    if (localStorage.getItem("allTasks")) {
+        let allTasks = get_from_storage("allTasks")
+        for (let y in allTasks) {
+            if (allTasks[y].day == hc(x)[0] && allTasks[y].hour == `${hc(x)[1]}:00-${Number(hc(x)[1]) + 1}:00`) {
+                id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).innerText = allTasks[y].name
+                switch (allTasks[y].urgency) {
+                    case "Urgent":
+                        id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = red1
+                        break;
+                    case "Better start":
+                        id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = yellow1
+                        break;
+                    case "Take the time":
+                        id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = green1
+                        break;
+                }
+            }
+        }
+    }
     tasks[x].addEventListener("click", () => {
         if (localStorage.getItem("allTasks")) {
             let allTasks = get_from_storage("allTasks")
@@ -28,12 +48,15 @@ for (let x in tasks) {
                             <h4 class="card-title">${allTasks[y].name}</h4>
                             <p class="card-text">${allTasks[y].description}</p>
                             <p><label>Gave by:</lable>${allTasks[y].boss}</p>
-                            <button id="ok">OK</button>
+                            <button id="ok">OK</button> 
+                            <button id="edit">Edit</button>
+                            <button id="move">Move</button>
+                            <button id="delete">Delete</button>
                         </div>
                 </div>`
-                    switch(allTasks[y].urgency){
+                    switch (allTasks[y].urgency) {
                         case "Urgent":
-                            id_element("tcard").style.backgroundColor=red1
+                            id_element("tcard").style.backgroundColor = red1
                             break;
                         case "Better start":
                             id_element("tcard").style.backgroundColor = yellow1
@@ -64,6 +87,7 @@ for (let x in tasks) {
                 let hour = id_element("hour").value
                 if (tname == "" || description == "" || boss == "" || urgency == "Select Urgency") {
                     alert("Missing data")
+                    id_element("show").close()
                 }
                 else {
                     let newTask = new Task(tname, description, boss, urgency, day, hour)
@@ -75,8 +99,21 @@ for (let x in tasks) {
                     else {
                         set_to_storage("allTasks", [newTask])
                     }
+                    id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).innerText = tname
+                    switch (urgency) {
+                        case "Urgent":
+                            id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = red1
+                            break;
+                        case "Better start":
+                            id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = yellow1
+                            break;
+                        case "Take the time":
+                            id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = green1
+                            break;
+                    }
+                    id_element("show").close()
                 }
-                id_element("show").close()
+
             })
         })
         function edit() {
@@ -110,7 +147,8 @@ for (let x in tasks) {
         <option>16:00-17:00</option>
         <option>17:00-18:00</option>
         </select>
-        <button id="save">Save</button></div>`
+        <button id="save">Save</button>
+        <button id="close">Close</button></div>`
             id_element("day").value = hc(x)[0]
             id_element("hour").value = `${hc(x)[1]}:00-${Number(hc(x)[1]) + 1}:00`
             id_element('urgency').addEventListener("click", function () {
@@ -131,12 +169,11 @@ for (let x in tasks) {
                 for (let y in class_element("u")) {
                     class_element("u")[y].style.backgroundColor = "white"
                 }
-            }
-            )
+            })
+                id_element("close").addEventListener("click", () => { id_element("show").close()})
         }
     })
 }
-
 function hc(i) {
     let dh = []
     switch (i % 6) {
