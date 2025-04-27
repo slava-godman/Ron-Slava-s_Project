@@ -18,6 +18,6 @@ $(document).ready(function () {
                     $('#forgotProgressBar').css('width', '0%').attr('aria-valuenow', 0);
                 }, 300);
             }
-        }, 30); // 30ms per 1% = about 3 seconds total
+        }, 70); // 30ms per 1% = about 3 seconds total
     });
 });
