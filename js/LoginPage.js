@@ -1,14 +1,4 @@
 $(document).ready(function () {
-<<<<<<< HEAD
-    $('#loginButton').on('click', function () {
-      // Hide the button
-      $(this).hide();
-  
-      // Show the progress bar
-      $('#progressWrapper').show();
-  
-      // Animate progress bar
-=======
   $('#loginButton').on('click', function () {
     const email = $('#form2Example1').val();
     const password = $('#form2Example2').val();
@@ -29,32 +19,19 @@ $(document).ready(function () {
       $(this).hide();
       $('#progressWrapper').show();
 
->>>>>>> 8a04b049f9facea2fb4a35016386fe932ebf6f29
       let progress = 0;
       const interval = setInterval(function () {
         progress += 1;
         $('#progressBar').css('width', progress + '%').text(progress + '%');
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> 8a04b049f9facea2fb4a35016386fe932ebf6f29
         if (progress >= 100) {
           clearInterval(interval);
-          window.location.href = "app.html";
+          window.location.href = "calendar.html";
         }
-      }, 70);
-<<<<<<< HEAD
-    });
-  });
-  
-  
-  
-=======
+      }, 20);
     } else {
       // User not found
       alert('Invalid email or password.');
     }
   });
 });
->>>>>>> 8a04b049f9facea2fb4a35016386fe932ebf6f29
