@@ -1,10 +1,7 @@
 $(document).ready(function () {
     $('#register').on('click', function () {
-      const email = $('#form2Example1').val().trim();
-      const password = $('#form2Example2').val().trim();
-
-      console.log("Email:", email);
-      console.log("Password:", password);
+      const email = $('#form3Example3').val().trim();
+      const password = $('#form3Example4').val().trim();
   
       if (!email || !password) {
         alert('Please fill in all fields.');

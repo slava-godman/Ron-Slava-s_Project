@@ -26,7 +26,7 @@ $(document).ready(function () {
 
         if (progress >= 100) {
           clearInterval(interval);
-          window.location.href = "calendar.html";
+          window.location.href = "app.html";
         }
       }, 70);
     } else {
