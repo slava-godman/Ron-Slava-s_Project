@@ -2,35 +2,48 @@
 const tasks = class_element("task-box")
 class Task {
     constructor(name, description, boss, urgency, day, hour) {
-        name = this.name
-        description = this.description
-        boss = this.boss
-        urgency = this.urgency
-        day = this.day
-        hour = this.hour
+        this.name = name
+        this.description = description
+        this.boss = boss
+        this.urgency = urgency
+        this.day = day
+        this.hour = hour
     }
 }
+let green1 = "#01fc55"
+let yellow1 = "#f4dd44"
+let red1 = "#df3719"
 for (let x in tasks) {
     tasks[x].id = hc(x)[0] + '-' + hc(x)[1]
     tasks[x].addEventListener("click", () => {
         if (localStorage.getItem("allTasks")) {
-            allTasks = get_from_storage("allTasks")
-            for (y in allTasks) {
-                if (allTasks[y].day == hc(x)[0] && allTasks[y].hour == hc(x)[1]) {
-                    id_element("show").innerHTML = `<div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">${allTasks[y].name}</h5>
-                            <p class="card-text">${allTasks[y].description}</p>
-                            <p><label>Gave by:</lable>${allTasks[y].boss}</p>
-                            <a href="#" class="btn btn-primary">Save</a>
-                        </div>
-                </div>`
-                }
-                else {
-                    id_element("show").innerHTML = `<h4>${hc(x)[0]} ${hc(x)[1]}:00-${Number(hc(x)[1]) + 1}:00</h4>
+            let allTasks = get_from_storage("allTasks")
+            for (let y in allTasks) {
+                id_element("show").innerHTML = `<h4>${hc(x)[0]} ${hc(x)[1]}:00-${Number(hc(x)[1]) + 1}:00</h4>
                     <div>No tasks here</div>
                 <button id="add">Add Task</button>`
-
+                if (allTasks[y].day == hc(x)[0] && allTasks[y].hour == `${hc(x)[1]}:00-${Number(hc(x)[1]) + 1}:00`) {
+                    id_element("show").innerHTML = `<div class="card" style="width: 18rem;">
+                        <div class="card-body" id="tcard">
+                            <h4 class="card-title">${allTasks[y].name}</h4>
+                            <p class="card-text">${allTasks[y].description}</p>
+                            <p><label>Gave by:</lable>${allTasks[y].boss}</p>
+                            <button id="ok">OK</button>
+                        </div>
+                </div>`
+                    switch(allTasks[y].urgency){
+                        case "Urgent":
+                            id_element("tcard").style.backgroundColor=red1
+                            break;
+                        case "Better start":
+                            id_element("tcard").style.backgroundColor = yellow1
+                            break;
+                        case "Take the time":
+                            id_element("tcard").style.backgroundColor = green1
+                            break;
+                    }
+                    id_element("ok").addEventListener("click", () => { id_element("show").close() })
+                    break;
                 }
             }
         }
@@ -40,7 +53,35 @@ for (let x in tasks) {
             <button id="add">Add Task</button >`
         }
         id_element("show").show()
-        id_element("add").addEventListener("click", () => {  id_element("show").innerHTML = `<div id="chin"><label>Name:</label><input id="tname">
+        id_element("add").addEventListener("click", () => {
+            edit()
+            id_element("save").addEventListener("click", () => {
+                let tname = id_element("tname").value
+                let description = id_element("description").value
+                let boss = id_element("boss").value
+                let urgency = id_element("urgency").value
+                let day = id_element("day").value
+                let hour = id_element("hour").value
+                if (tname == "" || description == "" || boss == "" || urgency == "Select Urgency") {
+                    alert("Missing data")
+                }
+                else {
+                    let newTask = new Task(tname, description, boss, urgency, day, hour)
+                    if (localStorage.getItem("allTasks")) {
+                        let allTasks = get_from_storage("allTasks")
+                        allTasks.push(newTask)
+                        set_to_storage("allTasks", allTasks)
+                    }
+                    else {
+                        set_to_storage("allTasks", [newTask])
+                    }
+                }
+                id_element("show").close()
+            })
+        })
+        function edit() {
+
+            id_element("show").innerHTML = `<div id="chin"><label>Name:</label><input id="tname">
         <label>Description:</label><textarea id="description"></textarea>
         <label>Gave by:</label><input id="boss">
         <label>Urgency:</label><select id="urgency">
@@ -49,7 +90,7 @@ for (let x in tasks) {
         <option class="u">Better start</option>
         <option class="u">Take the time</option>
         </select>
-        <label>Day:</label><select id="day">
+        <label>Day:</label><select id="day" disabled>
         <option>Sunday</option>
         <option>Monday</option>
         <option>Tuesday</option>
@@ -57,7 +98,7 @@ for (let x in tasks) {
         <option>Thursday</option>
         <option>Friday</option>
         </select>
-        <label>Hours:</label><select id="hour">
+        <label>Hours:</label><select id="hour" disabled>
         <option>8:00-9:00</option>
         <option>9:00-10:00</option>
         <option>10:00-11:00</option>
@@ -75,13 +116,13 @@ for (let x in tasks) {
             id_element('urgency').addEventListener("click", function () {
                 switch (id_element("urgency").value) {
                     case "Urgent":
-                        id_element("urgency").style.backgroundColor = "#df3719"
+                        id_element("urgency").style.backgroundColor = red1
                         break
                     case "Better start":
-                        id_element("urgency").style.backgroundColor = "#f4dd44"
+                        id_element("urgency").style.backgroundColor = yellow1
                         break
                     case "Take the time":
-                        id_element("urgency").style.backgroundColor = "#01fc55"
+                        id_element("urgency").style.backgroundColor = green1
                         break
                     default:
                         id_element("urgency").style.backgroundColor = "white"
@@ -92,12 +133,6 @@ for (let x in tasks) {
                 }
             }
             )
-            id_element("save").addEventListener("click", () => {
-
-                id_element("show").close()
-            }) })
-        function add(x) {
-           
         }
     })
 }
