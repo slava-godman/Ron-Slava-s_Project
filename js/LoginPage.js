@@ -26,9 +26,9 @@ $(document).ready(function () {
 
         if (progress >= 100) {
           clearInterval(interval);
-          window.location.href = "calendar.html";
+          window.location.href = "app.html";
         }
-      }, 20);
+      }, 70);
     } else {
       // User not found
       alert('Invalid email or password.');
