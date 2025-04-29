@@ -45,7 +45,7 @@ for (let x in tasks) {
                 if (allTasks[y].day == hc(x)[0] && allTasks[y].hour == `${hc(x)[1]}:00-${Number(hc(x)[1]) + 1}:00`) {
                     id_element("show").innerHTML = `<div class="card" style="width: 18rem;">
                         <div class="card-body" id="tcard">
-                            <h4 class="card-title">${allTasks[y].name}</h4>
+                            <h3 class="card-title">${allTasks[y].name}</h3>
                             <p class="card-text">${allTasks[y].description}</p>
                             <p><label>Gave by:</lable>${allTasks[y].boss}</p>
                             <button id="ok">OK</button> 
@@ -66,14 +66,134 @@ for (let x in tasks) {
                             break;
                     }
                     id_element("ok").addEventListener("click", () => { id_element("show").close() })
+                    id_element("edit").addEventListener("click", () => {
+                        edit()
+                        id_element("tname").value = allTasks[y].name
+                        id_element("description").value = allTasks[y].description
+                        id_element("boss").value = allTasks[y].boss
+                        id_element("urgency").value = allTasks[y].urgency
+                        switch (id_element("urgency").value) {
+                            case "Urgent":
+                                id_element("urgency").style.backgroundColor = red1
+                                break
+                            case "Better start":
+                                id_element("urgency").style.backgroundColor = yellow1
+                                break
+                            case "Take the time":
+                                id_element("urgency").style.backgroundColor = green1
+                                break
+                            default:
+                                id_element("urgency").style.backgroundColor = "white"
+                                break
+                        }
+                        id_element("close").addEventListener("click", () => { id_element("show").close() })
+                        id_element("save").addEventListener("click", () => {
+                            let tname = id_element("tname").value
+                            let description = id_element("description").value
+                            let boss = id_element("boss").value
+                            let urgency = id_element("urgency").value
+                            let day = id_element("day").value
+                            let hour = id_element("hour").value
+                            if (tname == "" || description == "" || boss == "" || urgency == "Select Urgency") {
+                                alert("Missing data")
+                            }
+                            else {
+                                allTasks[y] = new Task(tname, description, boss, urgency, day, hour)
+                                set_to_storage("allTasks", allTasks)
+                                id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).innerText = allTasks[y].name
+                                switch (allTasks[y].urgency) {
+                                    case "Urgent":
+                                        id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = red1
+                                        break;
+                                    case "Better start":
+                                        id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = yellow1
+                                        break;
+                                    case "Take the time":
+                                        id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = green1
+                                        break;
+                                }
+                                id_element("show").close()
+                            }
+                        })
+                    })
+                    id_element("move").addEventListener("click", () => {
+                        id_element("show").innerHTML = `<h3>${allTasks[y].name}</h3>
+                        <label>Day:</label><select id="day">
+        <option>Sunday</option>
+        <option>Monday</option>
+        <option>Tuesday</option>
+        <option>Wednesday</option>
+        <option>Thursday</option>
+        <option>Friday</option>
+        </select>
+        <label>Hours:</label><select id="hour">
+        <option>8:00-9:00</option>
+        <option>9:00-10:00</option>
+        <option>10:00-11:00</option>
+        <option>11:00-12:00</option>
+        <option>12:00-13:00</option>
+        <option>13:00-14:00</option>
+        <option>14:00-15:00</option>
+        <option>15:00-16:00</option>
+        <option>16:00-17:00</option>
+        <option>17:00-18:00</option>
+        </select>
+        <button id="save">Save</button>`
+        id_element('day').value=allTasks[y].day
+        id_element("hour").value=allTasks[y].hour
+                        id_element("save").addEventListener("click", () => {
+                            let hour = id_element("hour").value
+                            let day = id_element("day").value
+                            let flag = true
+                            for (let z in allTasks) {
+                                if (z != y && allTasks[z].hour == hour && allTasks[z].day == day) {
+                                    alert("Task already exists in this hour")
+                                    flag = false
+                                }
+                            }
+                            if (flag) {
+                                if (allTasks[y].hour != hour || allTasks[y].day != day) {
+                                    allTasks[y].hour = hour
+                                    allTasks[y].day = day
+                                    set_to_storage("allTasks", allTasks)
+                                    id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).innerText = ""
+                                    id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = "white"
+                                    for(let z in tasks){
+                                        if (hc(z)[0] == day && hour == `${hc(z)[1]}:00-${Number(hc(z)[1]) + 1}:00`){
+                                            id_element(`badge-${hc(z)[0]}-${hc(z)[1]}`).innerText = allTasks[y].name
+                                            switch (allTasks[y].urgency) {
+                                                case "Urgent":
+                                                    id_element(`badge-${hc(z)[0]}-${hc(z)[1]}`).style.backgroundColor = red1
+                                                    break;
+                                                case "Better start":
+                                                    id_element(`badge-${hc(z)[0]}-${hc(z)[1]}`).style.backgroundColor = yellow1
+                                                    break;
+                                                case "Take the time":
+                                                    id_element(`badge-${hc(z)[0]}-${hc(z)[1]}`).style.backgroundColor = green1
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                }
+                            id_element("show").close()
+                            }
+                        })
+                    })
+                    id_element("delete").addEventListener("click", () => {
+                        allTasks.splice(y, 1)
+                        set_to_storage("allTasks", allTasks)
+                        id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).innerText = ""
+                        id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = "white"
+                        id_element("show").close()
+                    })
                     break;
                 }
             }
         }
         else {
-            id_element("show").innerHTML = `<h4>${hc(x)[0]} ${hc(x)[1]}:00-${Number(hc(x)[1]) + 1}:00</h4>
+            id_element("show").innerHTML = `<h3>${hc(x)[0]} ${hc(x)[1]}:00-${Number(hc(x)[1]) + 1}:00</h3>
             <div>No tasks here</div>
-            <button id="add">Add Task</button >`
+            <button id="add">Add Task</button>`
         }
         id_element("show").show()
         id_element("add").addEventListener("click", () => {
@@ -87,7 +207,6 @@ for (let x in tasks) {
                 let hour = id_element("hour").value
                 if (tname == "" || description == "" || boss == "" || urgency == "Select Urgency") {
                     alert("Missing data")
-                    id_element("show").close()
                 }
                 else {
                     let newTask = new Task(tname, description, boss, urgency, day, hour)
@@ -116,6 +235,7 @@ for (let x in tasks) {
 
             })
         })
+
         function edit() {
 
             id_element("show").innerHTML = `<div id="chin"><label>Name:</label><input id="tname">
@@ -170,7 +290,7 @@ for (let x in tasks) {
                     class_element("u")[y].style.backgroundColor = "white"
                 }
             })
-                id_element("close").addEventListener("click", () => { id_element("show").close()})
+            id_element("close").addEventListener("click", () => { id_element("show").close() })
         }
     })
 }
