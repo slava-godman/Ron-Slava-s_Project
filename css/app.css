@@ -2,7 +2,9 @@ body {
     margin-top: 20px;
 }
 
-table{margin-left:20%}
+table {
+    margin-left: 20%
+}
 
 .bg-light-gray {
     background-color: #f7f7f7;
@@ -127,22 +129,89 @@ table{margin-left:20%}
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
-.task-box:hover{
+
+.task-box:hover {
     background-color: rgb(228, 228, 228);
 }
-#show{
+
+#show {
     margin-top: 10%;
     position: fixed;
 }
-#save,#close{
-    background-color: #9d60ff;
+
+#save,
+#close {
     margin-top: 10px;
-    width:30%
+    width: 30%
 }
-#save{
-    background-color: #d84213;
+
+#save {
+    background-color: #ee8803;
 }
-#chin{
+#save:hover{
+    background-color: orange;
+}
+#close{
+    background-color: #9d60ff;
+}
+#close:hover{
+    background-color: rgb(179, 92, 246);
+}
+#add{
+    background-color: blue;
+    color:white
+}
+#add:hover{
+    background-color: rgb(0, 0, 147);
+}
+#ok{
+    background-color: rgb(225, 224, 224);
+    color:#2c8102;
+}
+#ok:hover{
+    background-color: white;
+    color:green;
+}
+#edit{
+    background-color: #06f7ff;
+}
+#edit:hover{
+    background-color: #0bd6dd;
+}
+#move{
+    background-color: rgb(204, 1, 249);
+}
+#move:hover{
+    background-color: #b20bd7;
+}
+#delete{
+    background-color: red;
+}
+#delete:hover{
+    background-color: #dc2d06;
+}
+#chin {
+    display: flex;
+    flex-direction: column;
+}
+#tcard{
     display:flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#wait{
+    display: none;
+    border: 6px solid #4ca520;
+    border-right-color:transparent;
+    width:30px;
+    height:30px;
+    border-radius: 50%;
+    animation:1.8s linear spin
+}
+@keyframes spin{
+    from{}
+    to {
+        transform: rotate(360deg);
+    }
 }

@@ -1,4 +1,3 @@
-//import { get_from_storage,set_to_storage,id_element,class_element } from "./utils(R)";
 const tasks = class_element("task-box")
 class Task {
     constructor(name, description, boss, urgency, day, hour) {
@@ -40,18 +39,23 @@ for (let x in tasks) {
             let allTasks = get_from_storage("allTasks")
             for (let y in allTasks) {
                 id_element("show").innerHTML = `<h4>${hc(x)[0]} ${hc(x)[1]}:00-${Number(hc(x)[1]) + 1}:00</h4>
-                    <div>No tasks here</div>
-                <button id="add">Add Task</button>`
+                    <p>No tasks here</p>
+                    <button id="add">Add Task</button>
+                    <button id="ok">OK</button>
+                `
+                id_element("ok").addEventListener("click",()=>{
+                    id_element("show").close()
+                })
                 if (allTasks[y].day == hc(x)[0] && allTasks[y].hour == `${hc(x)[1]}:00-${Number(hc(x)[1]) + 1}:00`) {
                     id_element("show").innerHTML = `<div class="card" style="width: 18rem;">
                         <div class="card-body" id="tcard">
                             <h3 class="card-title">${allTasks[y].name}</h3>
                             <p class="card-text">${allTasks[y].description}</p>
                             <p><label>Gave by:</lable>${allTasks[y].boss}</p>
-                            <button id="ok">OK</button> 
+                            <div><button id="ok">OK</button> 
                             <button id="edit">Edit</button>
                             <button id="move">Move</button>
-                            <button id="delete">Delete</button>
+                            <button id="delete">Delete</button></div>
                         </div>
                 </div>`
                     switch (allTasks[y].urgency) {
@@ -65,7 +69,7 @@ for (let x in tasks) {
                             id_element("tcard").style.backgroundColor = green1
                             break;
                     }
-                    id_element("ok").addEventListener("click", () => { id_element("show").close() })
+                    id_element("ok").addEventListener("click",()=>{id_element("show").close()})
                     id_element("edit").addEventListener("click", () => {
                         edit()
                         id_element("tname").value = allTasks[y].name
@@ -112,7 +116,8 @@ for (let x in tasks) {
                                         id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = green1
                                         break;
                                 }
-                                id_element("show").close()
+                                id_element("wait").style.display = "flex"
+                                wait(1.8).then(() => { id_element("wait").style.display = "none", id_element("show").close() })
                             }
                         })
                     })
@@ -138,9 +143,10 @@ for (let x in tasks) {
         <option>16:00-17:00</option>
         <option>17:00-18:00</option>
         </select>
-        <button id="save">Save</button>`
-        id_element('day').value=allTasks[y].day
-        id_element("hour").value=allTasks[y].hour
+        <button id="save">Save</button>
+        <div id="wait"></div>`
+                        id_element('day').value = allTasks[y].day
+                        id_element("hour").value = allTasks[y].hour
                         id_element("save").addEventListener("click", () => {
                             let hour = id_element("hour").value
                             let day = id_element("day").value
@@ -158,8 +164,8 @@ for (let x in tasks) {
                                     set_to_storage("allTasks", allTasks)
                                     id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).innerText = ""
                                     id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = "white"
-                                    for(let z in tasks){
-                                        if (hc(z)[0] == day && hour == `${hc(z)[1]}:00-${Number(hc(z)[1]) + 1}:00`){
+                                    for (let z in tasks) {
+                                        if (hc(z)[0] == day && hour == `${hc(z)[1]}:00-${Number(hc(z)[1]) + 1}:00`) {
                                             id_element(`badge-${hc(z)[0]}-${hc(z)[1]}`).innerText = allTasks[y].name
                                             switch (allTasks[y].urgency) {
                                                 case "Urgent":
@@ -175,7 +181,8 @@ for (let x in tasks) {
                                         }
                                     }
                                 }
-                            id_element("show").close()
+                                id_element("wait").style.display="flex"
+                                wait(1.8).then(()=>{id_element("wait").style.display="none",id_element("show").close()}) 
                             }
                         })
                     })
@@ -192,8 +199,9 @@ for (let x in tasks) {
         }
         else {
             id_element("show").innerHTML = `<h3>${hc(x)[0]} ${hc(x)[1]}:00-${Number(hc(x)[1]) + 1}:00</h3>
-            <div>No tasks here</div>
-            <button id="add">Add Task</button>`
+            <p>No tasks here</p>
+            <button id="add">Add Task</button>
+            <button id="close">Close</button>`
         }
         id_element("show").show()
         id_element("add").addEventListener("click", () => {
@@ -230,7 +238,8 @@ for (let x in tasks) {
                             id_element(`badge-${hc(x)[0]}-${hc(x)[1]}`).style.backgroundColor = green1
                             break;
                     }
-                    id_element("show").close()
+                    id_element("wait").style.display = "flex"
+                    wait(1.8).then(()=>{id_element("wait").style.display = "none", id_element("show").close()}) 
                 }
 
             })
@@ -268,7 +277,8 @@ for (let x in tasks) {
         <option>17:00-18:00</option>
         </select>
         <button id="save">Save</button>
-        <button id="close">Close</button></div>`
+        <button id="close">Close</button></div>
+        <div id="wait"></div>`
             id_element("day").value = hc(x)[0]
             id_element("hour").value = `${hc(x)[1]}:00-${Number(hc(x)[1]) + 1}:00`
             id_element('urgency').addEventListener("click", function () {
@@ -294,6 +304,10 @@ for (let x in tasks) {
         }
     })
 }
+function wait(s) {
+    return new Promise(resolve => setTimeout(resolve, s*1000));
+}
+const sleep = (time) => new Promise((resolve, reject) => setTimeout(resolve, time * 1000))
 function hc(i) {
     let dh = []
     switch (i % 6) {
